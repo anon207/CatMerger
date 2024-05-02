@@ -1,13 +1,15 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-export const MoneyBar = ({ timer }) => {
+export const MoneyBar = ({ timer, crates, setCrates, MaxCrates }) => {
     return(
         <View style={MoneyBarStyles.container}>
             <View style={MoneyBarStyles.moneyDisplay}>
                 <Text style={{fontSize: 24}}>money</Text>
             </View>
             <View style={MoneyBarStyles.crateDisplay}>
-                <Text>Time till next crate: {timer}</Text>
+                <Text>Time till next crate: {crates.length !== MaxCrates ? timer : 'FULL'}</Text>
+                <Text>Crates: {crates.length}</Text>
+                <Text>MaxCrates: {MaxCrates}</Text>
             </View>
         </View>
     );
