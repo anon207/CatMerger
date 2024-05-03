@@ -18,7 +18,7 @@ export const CatContainer = ({ timer, crates, setCrates, MaxCrates }) => {
     };
 
     const removeCrate = (idToRemove, x, y) => {
-        setPrimaryCats(prevCrates => [...prevCrates, { id: idToRemove, x, y }]);
+        setPrimaryCats(prevCats => [...prevCats, { id: idToRemove, x, y }]);
         setCrates(prevCrates => prevCrates.filter(crate => crate.id !== idToRemove));
     };
 
@@ -30,33 +30,17 @@ export const CatContainer = ({ timer, crates, setCrates, MaxCrates }) => {
         }
     }, [timer]);
 
-    const panResponders = useRef({}).current;
-
-    const createPanResponder = (id) => {
-        return PanResponder.create({
-            onStartShouldSetPanResponder: () => true,
-            onPanResponderMove: Animated.event(
-                [
-                    null,
-                    { dx: panResponders[id]?.x, dy: panResponders[id]?.y }
-                ],
-                { useNativeDriver: false }
-            ),
+    const createPanResponder = () => {
+        const pan = new Animated.ValueXY();
+        const panResponder = PanResponder.create({
+            onMoveShouldSetPanResponder: () => true,
+            onPanResponderMove: Animated.event([null, { dx: pan.x, dy: pan.y }], { useNativeDriver: false }),
             onPanResponderRelease: () => {
-                // Don't reset the pan gesture
-            }
+                pan.extractOffset();
+            },
         });
+        return { pan, panResponder };
     };
-
-    useEffect(() => {
-        primaryCats.forEach(crate => {
-            if (!panResponders[crate.id]) {
-                panResponders[crate.id] = createPanResponder(crate.id);
-                panResponders[crate.id].x = new Animated.Value(0);
-                panResponders[crate.id].y = new Animated.Value(0);
-            }
-        });
-    }, [primaryCats]);
 
     return (
         <View style={CatContainerStyles.container}>
@@ -68,20 +52,21 @@ export const CatContainer = ({ timer, crates, setCrates, MaxCrates }) => {
                     />
                 </Pressable>
             ))}
-            {primaryCats.map((primaryCat) => (
-                <Animated.View
-                    key={primaryCat.id}
-                    style={[
-                        { position: 'absolute', top: primaryCat.y, left: primaryCat.x },
-                        panResponders[primaryCat.id]?.panHandlers?.move?.getLayout()
-                    ]}
-                >
-                    <Image
-                        source={require('../assets/Test_cat1.jpg')}
-                        style={{ width: 50, height: 50 }}
-                    />
-                </Animated.View>
-            ))}
+            {primaryCats.map(primaryCat => {
+                const { pan, panResponder } = createPanResponder();
+                return (
+                    <Animated.View
+                        key={primaryCat.id}
+                        style={[
+                            { position: 'absolute', top: primaryCat.y, left: primaryCat.x },
+                            { transform: [{ translateX: pan.x }, { translateY: pan.y }] },
+                        ]}
+                        {...panResponder.panHandlers}
+                    >
+                        <Image source={require('../assets/Test_cat1.jpg')} style={{ width: 50, height: 50 }} />
+                    </Animated.View>
+                );
+            })}
         </View>
     );
 };
@@ -92,6 +77,6 @@ const CatContainerStyles = StyleSheet.create({
         height: '55%',
         borderWidth: 1,
         position: 'absolute',
-        bottom: '20%'
+        bottom: '20%',
     },
 });
