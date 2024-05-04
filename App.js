@@ -10,7 +10,7 @@ export default function App() {
   const initialTimePerCrate = 5;
   const [timer, setTimer] = useState(initialTimePerCrate);
   const [crates, setCrates] = useState([]);
-  const MaxCrates = 2;
+  const MaxCrates = 3;
 
   useEffect(() => {
     const interval = setInterval(() => {
