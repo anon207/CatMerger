@@ -14,10 +14,24 @@ export const PrimaryCats = ({ primaryCats, setPrimaryCats }) => {
                         cat.id === primaryCat.id ? { ...cat, x: cat.x + dx, y: cat.y + dy } : cat
                     ));
                 },
+                onPanResponderRelease: () => {
+                    if (primaryCat.x >= 255 || primaryCat.x <= 0 || primaryCat.y >= 413 || primaryCat.y <= -1) {
+                        setPrimaryCats(prevCats => prevCats.map(cat => {
+                            if (cat.id === primaryCat.id) {
+                                return {
+                                    ...cat,
+                                    x: 0,
+                                    y: 0
+                                };
+                            }
+                            return cat;
+                        }));
+                    }
+                },
             })
         ));
     }, [primaryCats]);
-
+console.log(primaryCats);
     return(
         <>
             {primaryCats.map((primaryCat, index) => (
