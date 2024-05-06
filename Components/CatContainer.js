@@ -30,7 +30,7 @@ export const CatContainer = ({ timer, crates, setCrates, MaxCrates }) => {
             addedCrateRef.current = false;
         }
     }, [timer]);
-    
+
     return (
         <View style={CatContainerStyles.container}>
             {crates.map(crate => (

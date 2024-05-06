@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react';
-import { Image, PanResponder, Animated } from 'react-native';
+import { Image, PanResponder, Animated, Dimensions, View } from 'react-native';
 
 export const PrimaryCats = ({ primaryCats, setPrimaryCats }) => {
     const panRespondersRef = useRef([]);
+    const { width, height } = Dimensions.get('window');
 
     useEffect(() => {
         panRespondersRef.current = primaryCats.map(primaryCat => (
@@ -15,13 +16,15 @@ export const PrimaryCats = ({ primaryCats, setPrimaryCats }) => {
                     ));
                 },
                 onPanResponderRelease: () => {
-                    if (primaryCat.x >= 255 || primaryCat.x <= 0 || primaryCat.y >= 413 || primaryCat.y <= -1) {
+                    if (primaryCat.x >= (width*.80 - 50) || primaryCat.x <= 0 || primaryCat.y >= (height*.55 - 50) || primaryCat.y <= 0) {
+                        const randomX = Math.floor(Math.random() * (width*.80 - 50));
+                        const randomY = Math.floor(Math.random() * (height*.55 - 50));
                         setPrimaryCats(prevCats => prevCats.map(cat => {
                             if (cat.id === primaryCat.id) {
                                 return {
                                     ...cat,
-                                    x: 0,
-                                    y: 0
+                                    x: randomX,
+                                    y: randomY
                                 };
                             }
                             return cat;
@@ -31,7 +34,7 @@ export const PrimaryCats = ({ primaryCats, setPrimaryCats }) => {
             })
         ));
     }, [primaryCats]);
-console.log(primaryCats);
+
     return(
         <>
             {primaryCats.map((primaryCat, index) => (
