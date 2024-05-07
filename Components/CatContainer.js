@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { StyleSheet, View, Pressable, Image } from 'react-native';
+import { StyleSheet, View, Pressable, Image, Animated } from 'react-native';
 import { PrimaryCats } from './PrimaryCats';
 
 export const CatContainer = ({ timer, crates, setCrates, MaxCrates }) => {
@@ -19,7 +19,7 @@ export const CatContainer = ({ timer, crates, setCrates, MaxCrates }) => {
     };
 
     const removeCrateAndAddCat = (crate) => {
-        setPrimaryCats(prevCats => [...prevCats, crate]);
+        setPrimaryCats(prevCats => [...prevCats, {...crate, animatedValue: new Animated.ValueXY({ x: crate.x, y: crate.y })}]);
         setCrates(prevCrates => prevCrates.filter(oldCrate => oldCrate.id !== crate.id));
     };
 

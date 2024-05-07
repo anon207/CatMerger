@@ -14,26 +14,28 @@ export const PrimaryCats = ({ primaryCats, setPrimaryCats }) => {
                     setPrimaryCats(prevCats => prevCats.map(cat =>
                         cat.id === primaryCat.id ? { ...cat, x: cat.x + dx, y: cat.y + dy } : cat
                     ));
+                    primaryCat.animatedValue.setValue({ x: primaryCat.animatedValue.x._value + dx, y: primaryCat.animatedValue.y._value + dy });
                 },
                 onPanResponderRelease: () => {
-                    if (primaryCat.x >= (width*.80 - 50) || primaryCat.x <= 0 || primaryCat.y >= (height*.55 - 50) || primaryCat.y <= 0) {
-                        const randomX = Math.floor(Math.random() * (width*.80 - 50));
-                        const randomY = Math.floor(Math.random() * (height*.55 - 50));
-                        setPrimaryCats(prevCats => prevCats.map(cat => {
-                            if (cat.id === primaryCat.id) {
-                                return {
-                                    ...cat,
-                                    x: randomX,
-                                    y: randomY
-                                };
-                            }
-                            return cat;
-                        }));
+                    if (primaryCat.animatedValue.x._value >= (width * 0.80 - 50) || primaryCat.animatedValue.x._value <= 0 || primaryCat.animatedValue.y._value >= (height * 0.55 - 50) || primaryCat.animatedValue.y._value <= 0) {
+                        const randomX = Math.floor(Math.random() * (width * 0.80 - 50));
+                        const randomY = Math.floor(Math.random() * (height * 0.55 - 50));
+                        animateCatToRandomPosition(primaryCat, randomX, randomY);
                     }
                 },
             })
         ));
     }, [primaryCats]);
+
+    const animateCatToRandomPosition = (cat, randomX, randomY) => {
+        Animated.timing(cat.animatedValue, {
+            toValue: { x: randomX, y: randomY },
+            duration: 500,
+            useNativeDriver: false
+        }).start(() => {
+            setPrimaryCats(prevCats => prevCats.map(c => (c.id === cat.id ? { ...c, x: randomX, y: randomY } : c)));
+        });
+    };
 
     return(
         <>
@@ -41,10 +43,15 @@ export const PrimaryCats = ({ primaryCats, setPrimaryCats }) => {
                 <Animated.View
                     key={primaryCat.id}
                     {...panRespondersRef.current[index]?.panHandlers}
+                    style={{
+                        position: 'absolute',
+                        top: primaryCat.animatedValue.y,
+                        left: primaryCat.animatedValue.x,
+                    }}
                 >
                     <Image
                         source={require('../assets/Test_cat1.jpg')}
-                        style={{ width: 50, height: 50, position: 'absolute', top: primaryCat.y, left: primaryCat.x }}
+                        style={{ width: 50, height: 50 }}
                     />
                 </Animated.View>
             ))}
