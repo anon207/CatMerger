@@ -19,7 +19,7 @@ export const CatContainer = ({ timer, crates, setCrates, MaxCrates }) => {
     };
 
     const removeCrateAndAddCat = (crate) => {
-        setPrimaryCats(prevCats => [...prevCats, {...crate, animatedValue: new Animated.ValueXY({ x: crate.x, y: crate.y })}]);
+    setPrimaryCats(prevCats => [...prevCats, /*crate*/{id: crate.id, animatedValue: new Animated.ValueXY({ x: crate.x, y: crate.y })}]);
         setCrates(prevCrates => prevCrates.filter(oldCrate => oldCrate.id !== crate.id));
     };
 
@@ -42,6 +42,7 @@ export const CatContainer = ({ timer, crates, setCrates, MaxCrates }) => {
                 </Pressable>
             ))}
             <PrimaryCats primaryCats={primaryCats} setPrimaryCats={setPrimaryCats} />
+            {/* { <PcatsTest primaryCats={primaryCats} setPrimaryCats={setPrimaryCats}/>} */}
         </View>
     );
 };

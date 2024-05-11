@@ -7,7 +7,7 @@ import { CatContainer } from './Components/CatContainer';
 
 
 export default function App() {
-  const initialTimePerCrate = 5;
+  const initialTimePerCrate = 3;
   const [timer, setTimer] = useState(initialTimePerCrate);
   const [crates, setCrates] = useState([]);
   const MaxCrates = 3;
