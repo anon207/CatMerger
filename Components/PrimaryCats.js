@@ -3,7 +3,7 @@ import { Image, PanResponder, Animated, Dimensions, View, Text } from 'react-nat
 import { PrimaryCatAnimations } from './PrimaryCatAnimations';
 import { PrimaryCatPanResponder } from './PrimaryCatPanResponder';
 
-export const PrimaryCats = ({ primaryCats, setPrimaryCats }) => {
+export const PrimaryCats = ({ primaryCats, setPrimaryCats, setMoney }) => {
     const panRespondersRef = useRef([]);
     const { width, height } = Dimensions.get('window');
     const [dxValues, setDxValues] = useState(primaryCats.map(() => 1));
@@ -67,7 +67,7 @@ export const PrimaryCats = ({ primaryCats, setPrimaryCats }) => {
                             style={{ width: 50, height: 50 }}
                         />
                     </Animated.View>
-                    <PrimaryCatAnimations primaryCat={primaryCat} setPrimaryCats={setPrimaryCats} dxValue={dxValues[index]}/>
+                    <PrimaryCatAnimations primaryCat={primaryCat} setPrimaryCats={setPrimaryCats} dxValue={dxValues[index]} setMoney={setMoney}/>
                 </View>
             ))}
         </>

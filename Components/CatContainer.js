@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, View, Pressable, Image, Animated } from 'react-native';
 import { PrimaryCats } from './PrimaryCats';
 
-export const CatContainer = ({ timer, crates, setCrates, MaxCrates }) => {
+export const CatContainer = ({ timer, crates, setCrates, MaxCrates, setMoney }) => {
     const addedCrateRef = useRef(false);
     const [primaryCats, setPrimaryCats] = useState([]);
 
@@ -41,7 +41,7 @@ export const CatContainer = ({ timer, crates, setCrates, MaxCrates }) => {
                     />
                 </Pressable>
             ))}
-            <PrimaryCats primaryCats={primaryCats} setPrimaryCats={setPrimaryCats} />
+            <PrimaryCats primaryCats={primaryCats} setPrimaryCats={setPrimaryCats} setMoney={setMoney}/>
         </View>
     );
 };

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Image, Animated, Text, View, StyleSheet } from 'react-native';
 
-export const PrimaryCatAnimations = ({ primaryCat, setPrimaryCats, dxValue }) => {
+export const PrimaryCatAnimations = ({ primaryCat, setPrimaryCats, dxValue, setMoney }) => {
     useEffect(() => {
         const spawnInterval = setInterval(() => {
             const spawnedObjectPosition = new Animated.ValueXY({ x: 0, y: 0 });
@@ -10,7 +10,7 @@ export const PrimaryCatAnimations = ({ primaryCat, setPrimaryCats, dxValue }) =>
             Animated.sequence([
                 Animated.timing(spawnedObjectPosition, {
                     toValue: dxValue > 0 ? { x: 75, y: 15 } : { x: -75, y: 15 },
-                    duration: 800,
+                    duration: 700,
                     useNativeDriver: false
                 }),
                 Animated.delay(200),
@@ -28,7 +28,7 @@ export const PrimaryCatAnimations = ({ primaryCat, setPrimaryCats, dxValue }) =>
                         return updatedCats;
                     });
                     startTextAnimation(primaryCat);
-                }, 500);
+                }, 400);
             });
 
             const basicYarn = (
@@ -66,11 +66,10 @@ export const PrimaryCatAnimations = ({ primaryCat, setPrimaryCats, dxValue }) =>
         const textScale = new Animated.Value(0);
 
         Animated.timing(textScale, {
-            toValue: 1, // Final scale value
+            toValue: 1,
             duration: 200,
-            useNativeDriver: false // Scale animation can be done using native driver
+            useNativeDriver: false
         }).start();
-
         Animated.sequence([
             Animated.timing(textOpacity, {
                 toValue: 1,
@@ -81,7 +80,7 @@ export const PrimaryCatAnimations = ({ primaryCat, setPrimaryCats, dxValue }) =>
                 toValue: { x: 0, y: -25 },
                 duration: 800,
                 useNativeDriver: false
-            }),
+            }, setMoney(n=>n+1)),
             Animated.delay(100),
             Animated.timing(textOpacity, {
                 toValue: 0,
