@@ -42,7 +42,6 @@ export const CatContainer = ({ timer, crates, setCrates, MaxCrates }) => {
                 </Pressable>
             ))}
             <PrimaryCats primaryCats={primaryCats} setPrimaryCats={setPrimaryCats} />
-            {/* { <PcatsTest primaryCats={primaryCats} setPrimaryCats={setPrimaryCats}/>} */}
         </View>
     );
 };

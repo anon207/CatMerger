@@ -1,17 +1,22 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Image, PanResponder, Animated, Dimensions, View, Text } from 'react-native';
 import { PrimaryCatAnimations } from './PrimaryCatAnimations';
+import { PrimaryCatPanResponder } from './PrimaryCatPanResponder';
 
 export const PrimaryCats = ({ primaryCats, setPrimaryCats }) => {
     const panRespondersRef = useRef([]);
     const { width, height } = Dimensions.get('window');
+    const [dxValues, setDxValues] = useState(primaryCats.map(() => 1));
 
     useEffect(() => {
-        panRespondersRef.current = primaryCats.map(primaryCat => (
+        panRespondersRef.current = primaryCats.map((primaryCat, index) => (
             PanResponder.create({
                 onStartShouldSetPanResponder: () => true,
                 onPanResponderMove: (evt, gestureState) => {
                     const { dx, dy } = gestureState;
+                    const newDxValues = [...dxValues];
+                    newDxValues[index] = dx;
+                    setDxValues(newDxValues);
                     setPrimaryCats(prevCats => prevCats.map(cat =>
                         cat.id === primaryCat.id ? { ...cat, x: dx, y: dy } : cat
                     ));
@@ -26,7 +31,7 @@ export const PrimaryCats = ({ primaryCats, setPrimaryCats }) => {
                 },
             })
         ));
-    }, [primaryCats]);
+    }, [dxValues, primaryCats]);
 
     const animateCatToRandomPosition = (cat, randomX, randomY) => {
         Animated.timing(cat.animatedValue, {
@@ -58,11 +63,11 @@ export const PrimaryCats = ({ primaryCats, setPrimaryCats }) => {
                         {...panRespondersRef.current[index]?.panHandlers}
                     >
                         <Image
-                            source={require('../assets/Test_cat1.jpg')}
+                            source={dxValues[index] > 0 ? require('../assets/Test_cat1.jpg') : require('../assets/Test_cat1_reflection.jpg')}
                             style={{ width: 50, height: 50 }}
                         />
                     </Animated.View>
-                    <PrimaryCatAnimations primaryCat={primaryCat} setPrimaryCats={setPrimaryCats}/>
+                    <PrimaryCatAnimations primaryCat={primaryCat} setPrimaryCats={setPrimaryCats} dxValue={dxValues[index]}/>
                 </View>
             ))}
         </>

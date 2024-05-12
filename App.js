@@ -10,6 +10,7 @@ export default function App() {
   const initialTimePerCrate = 3;
   const [timer, setTimer] = useState(initialTimePerCrate);
   const [crates, setCrates] = useState([]);
+  const [money, setMoney] = useState(0);
   const MaxCrates = 3;
 
   useEffect(() => {
@@ -27,8 +28,8 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <MoneyBar timer={timer} crates={crates} setCrates={setCrates} MaxCrates={MaxCrates}/>
-      <CatContainer timer={timer} crates={crates} setCrates={setCrates} MaxCrates={MaxCrates}/>
+      <MoneyBar timer={timer} crates={crates} setCrates={setCrates} MaxCrates={MaxCrates} money={money} setMoney={setMoney}/>
+      <CatContainer timer={timer} crates={crates} setCrates={setCrates} MaxCrates={MaxCrates} setMoney={setMoney}/>
       <UpgradeBar />
       <StatusBar hidden={true} />
     </View>
