@@ -2,9 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, View, Pressable, Image, Animated } from 'react-native';
 import { PrimaryCats } from './PrimaryCats';
 
-export const CatContainer = ({ timer, crates, setCrates, MaxCrates, setMoney }) => {
+export const CatContainer = ({ timer, crates, setCrates, MaxCrates, setMoney, primaryCats, setPrimaryCats }) => {
     const addedCrateRef = useRef(false);
-    const [primaryCats, setPrimaryCats] = useState([]);
 
     const addCrate = () => {
         if (!addedCrateRef.current && crates.length + primaryCats.length < MaxCrates) {

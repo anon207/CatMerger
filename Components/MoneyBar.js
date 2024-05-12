@@ -1,17 +1,34 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { useState, useEffect, useRef } from 'react';
+import { StyleSheet, Text, View, Image, Animated } from 'react-native';
 
-export const MoneyBar = ({ timer, crates, setCrates, MaxCrates, money, setMoney }) => {
+export const MoneyBar = ({ timer, crates, setCrates, MaxCrates, money, setMoney, primaryCats, setPrimaryCats }) => {
+    const [moneyPerSecond, setMoneyPerSecond] = useState(0);
+
+    useEffect(() => {
+        setMoneyPerSecond(primaryCats.length*.5);
+    }, [primaryCats]);
+
     return(
         <View style={MoneyBarStyles.container}>
-            <View style={MoneyBarStyles.moneyDisplay}>
-                <Text style={{fontSize: 24}}>money: {money}</Text>
-            </View>
-            <View style={MoneyBarStyles.crateDisplay}>
-                <Text>Time till next crate: {crates.length !== MaxCrates ? timer : 'FULL'}</Text>
-                <Text>Crates: {crates.length}</Text>
-                <Text>MaxCrates: {MaxCrates}</Text>
-            </View>
+                <View style={MoneyBarStyles.moneyDisplay}>
+                        <Image
+                            source={require('../assets/cat_coin.jpg')}
+                            style={{ width: 25, height: 25 }}
+                        />
+                    <Text style={{fontSize: 24}}> {money}</Text>
+                </View>
+                <View>
+                    <Text>{moneyPerSecond} coins/sec</Text>
+                </View>
+                <Animated.View>
+                    <Text style={{position: 'absolute', left: 160, bottom: 35}}>{timer}</Text>
+                    <Image
+                    source={require('../assets/crate.jpg')}
+                    style={MoneyBarStyles.crate}
+                    />
+                </Animated.View>
         </View>
+        
     );
 }
 
@@ -26,16 +43,23 @@ const MoneyBarStyles = StyleSheet.create({
         alignItems: 'center',
     },
     moneyDisplay: {
-        width: '50%',
+        marginTop: 20,
+        width: '40%',
         height: '30%',
-        backgroundColor: 'red',
+        flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        position: 'absolute'
     },
     crateDisplay: {
         position: 'absolute',
         right: 10,
         bottom: 5
+    },
+    crate: {
+        width: 30,
+        height: 30,
+        position: 'absolute',
+        left: 150,
+        bottom: 8
     },
 });

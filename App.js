@@ -8,6 +8,7 @@ import { CatContainer } from './Components/CatContainer';
 
 export default function App() {
   const initialTimePerCrate = 3;
+  const [primaryCats, setPrimaryCats] = useState([]);
   const [timer, setTimer] = useState(initialTimePerCrate);
   const [crates, setCrates] = useState([]);
   const [money, setMoney] = useState(0);
@@ -28,8 +29,8 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <MoneyBar timer={timer} crates={crates} setCrates={setCrates} MaxCrates={MaxCrates} money={money} setMoney={setMoney}/>
-      <CatContainer timer={timer} crates={crates} setCrates={setCrates} MaxCrates={MaxCrates} setMoney={setMoney}/>
+      <MoneyBar timer={timer} crates={crates} setCrates={setCrates} MaxCrates={MaxCrates} money={money} setMoney={setMoney} primaryCats={primaryCats} setPrimaryCats={setPrimaryCats}/>
+      <CatContainer timer={timer} crates={crates} setCrates={setCrates} MaxCrates={MaxCrates} setMoney={setMoney} primaryCats={primaryCats} setPrimaryCats={setPrimaryCats}/>
       <UpgradeBar />
       <StatusBar hidden={true} />
     </View>
