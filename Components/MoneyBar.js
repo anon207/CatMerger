@@ -12,8 +12,8 @@ export const MoneyBar = ({ timer, crates, setCrates, MaxCrates, money, setMoney,
         <View style={MoneyBarStyles.container}>
                 <View style={MoneyBarStyles.moneyDisplay}>
                         <Image
-                            source={require('../assets/cat_coin.jpg')}
-                            style={{ width: 25, height: 25 }}
+                            source={require('../assets/MyCatCoin.png')}
+                            style={{ width: 30, height: 30 }}
                         />
                     <Text style={{fontSize: 24, fontFamily: 'ComicSans'}}> {money}</Text>
                 </View>
@@ -26,7 +26,7 @@ export const MoneyBar = ({ timer, crates, setCrates, MaxCrates, money, setMoney,
                 <Animated.View>
                     <Text style={{position: 'absolute', left: 160, bottom: 35, fontFamily: 'ComicSans'}}>{timer}</Text>
                     <Image
-                    source={require('../assets/crate.jpg')}
+                    source={require('../assets/MyCatCrate.png')}
                     style={MoneyBarStyles.crate}
                     />
                 </Animated.View>

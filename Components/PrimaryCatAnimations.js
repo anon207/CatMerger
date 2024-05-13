@@ -111,8 +111,8 @@ export const PrimaryCatAnimations = ({ primaryCat, setPrimaryCats, dxValue, setM
             >
                 <View style={AnimationStyles.coinStyle}>
                     <Image
-                        source={require('../assets/cat_coin.jpg')}
-                        style={{ width: 25, height: 25 }}
+                        source={require('../assets/MyCatCoin.png')}
+                        style={{ width: 27.5, height: 27.5 }}
                     />
                     <View style={AnimationStyles.coinText}>
                         <Text style={{ fontSize: 15, fontFamily: 'ComicSans' }}>+1</Text>
