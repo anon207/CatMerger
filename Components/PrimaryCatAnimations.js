@@ -115,7 +115,7 @@ export const PrimaryCatAnimations = ({ primaryCat, setPrimaryCats, dxValue, setM
                         style={{ width: 25, height: 25 }}
                     />
                     <View style={AnimationStyles.coinText}>
-                        <Text style={{ fontSize: 15 }}>+1</Text>
+                        <Text style={{ fontSize: 15, fontFamily: 'ComicSans' }}>+1</Text>
                     </View>
                 </View>
             </Animated.View>

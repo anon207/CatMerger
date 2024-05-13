@@ -4,13 +4,13 @@ export const UpgradeBar = () => {
     return(
         <View style={UpgradeBarStyles.container}>
             <View style={UpgradeBarStyles.upgrades}>
-                <Text style={{fontSize: 13}}>Upgrades</Text>
+                <Text style={{fontSize: 13, fontFamily: 'KiddosyRegular'}}>Upgrades</Text>
             </View>
             <View style={UpgradeBarStyles.catShop}>
-                <Text style={{fontSize: 14}}>Cat shop</Text>
+                <Text style={{fontSize: 14, fontFamily: 'KiddosyRegular'}}>Cat shop</Text>
             </View>
             <View style={UpgradeBarStyles.menu}>
-                <Text style={{fontSize: 20}}>Menu</Text>
+                <Text style={{fontSize: 20, fontFamily: 'KiddosyRegular'}}>Menu</Text>
             </View>
         </View>
     );

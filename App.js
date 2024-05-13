@@ -1,47 +1,32 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
-import { useState, useEffect } from 'react';
-import { MoneyBar } from './Components/MoneyBar';
-import { UpgradeBar } from './Components/UpgradeBar';
-import { CatContainer } from './Components/CatContainer';
-
+import { StyleSheet } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { HomeScreen } from './Components/HomeScreen';
+import { useFonts } from 'expo-font';
 
 export default function App() {
-  const initialTimePerCrate = 3;
-  const [primaryCats, setPrimaryCats] = useState([]);
-  const [timer, setTimer] = useState(initialTimePerCrate);
-  const [crates, setCrates] = useState([]);
-  const [money, setMoney] = useState(0);
-  const MaxCrates = 3;
+  const [fontsLoaded] = useFonts({
+    'KiddosyRegular': require('./assets/Kiddosy Regular.ttf'),
+    'ComicSans': require('./assets/Ldfcomicsansbold-zgma.ttf')
+  });
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTimer(prevTimer => {
-        if (prevTimer <= 0) {
-          return(initialTimePerCrate);
-        }
-        return prevTimer - 1;
-      });
-    }, 1000);
+  if (!fontsLoaded) {
+    return null;
+  }
 
-    return () => clearInterval(interval);
-  }, []);
+  const Stack = createNativeStackNavigator();
 
   return (
-    <View style={styles.container}>
-      <MoneyBar timer={timer} crates={crates} setCrates={setCrates} MaxCrates={MaxCrates} money={money} setMoney={setMoney} primaryCats={primaryCats} setPrimaryCats={setPrimaryCats}/>
-      <CatContainer timer={timer} crates={crates} setCrates={setCrates} MaxCrates={MaxCrates} setMoney={setMoney} primaryCats={primaryCats} setPrimaryCats={setPrimaryCats}/>
-      <UpgradeBar />
-      <StatusBar hidden={true} />
-    </View>
+    <NavigationContainer>
+        <Stack.Navigator screenOptions={styles.navigationStyles}>
+          <Stack.Screen name="Homescreen" component={HomeScreen}/>
+        </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  navigationStyles: {
+    headerShown: false,
   },
 });

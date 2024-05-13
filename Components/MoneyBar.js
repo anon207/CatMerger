@@ -15,13 +15,16 @@ export const MoneyBar = ({ timer, crates, setCrates, MaxCrates, money, setMoney,
                             source={require('../assets/cat_coin.jpg')}
                             style={{ width: 25, height: 25 }}
                         />
-                    <Text style={{fontSize: 24}}> {money}</Text>
+                    <Text style={{fontSize: 24, fontFamily: 'ComicSans'}}> {money}</Text>
                 </View>
                 <View>
-                    <Text>{moneyPerSecond} coins/sec</Text>
+                    <Text>
+                        <Text style={{fontFamily: 'ComicSans'}}>{moneyPerSecond}</Text>
+                        <Text style={{fontFamily: 'KiddosyRegular'}}> coins/sec</Text>
+                    </Text>
                 </View>
                 <Animated.View>
-                    <Text style={{position: 'absolute', left: 160, bottom: 35}}>{timer}</Text>
+                    <Text style={{position: 'absolute', left: 160, bottom: 35, fontFamily: 'ComicSans'}}>{timer}</Text>
                     <Image
                     source={require('../assets/crate.jpg')}
                     style={MoneyBarStyles.crate}
