@@ -26,7 +26,7 @@ export const MoneyBar = ({ timer, crates, setCrates, MaxCrates, money, setMoney,
                 <Animated.View>
                     <Text style={{position: 'absolute', left: 160, bottom: 35, fontFamily: 'ComicSans'}}>{timer}</Text>
                     <Image
-                    source={require('../assets/MyCatCrate.png')}
+                    source={require('../assets/GreenWhiteCrate.png')}
                     style={MoneyBarStyles.crate}
                     />
                 </Animated.View>
