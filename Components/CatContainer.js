@@ -35,8 +35,8 @@ export const CatContainer = ({ timer, crates, setCrates, MaxCrates, setMoney, pr
             {crates.map(crate => (
                 <Pressable key={crate.id} onPress={() => removeCrateAndAddCat(crate)}>
                     <Image
-                        source={require('../assets/GreenWhiteCrate.png')}
-                        style={{ width: 60, height: 60, position: 'absolute', top: crate.y, left: crate.x }}
+                        source={require('../assets/Crates/GreenWhiteCrate.png')}
+                        style={{ width: 50, height: 50, position: 'absolute', top: crate.y, left: crate.x }}
                     />
                 </Pressable>
             ))}

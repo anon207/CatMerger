@@ -13,7 +13,6 @@ export const PrimaryCatAnimations = ({ primaryCat, setPrimaryCats, dxValue, setM
                     duration: 700,
                     useNativeDriver: false
                 }),
-                Animated.delay(200),
                 Animated.timing(opacity, {
                     toValue: 0,
                     duration: 300,
@@ -35,7 +34,7 @@ export const PrimaryCatAnimations = ({ primaryCat, setPrimaryCats, dxValue, setM
                 <Animated.View
                     style={{
                         position: 'absolute',
-                        top: primaryCat.animatedValue.y._value + 12.5,
+                        top: primaryCat.animatedValue.y._value + 24.5,
                         left: dxValue > 0 ? primaryCat.animatedValue.x._value : primaryCat.animatedValue.x._value + 25,
                         transform: [{ translateX: spawnedObjectPosition.x }, { translateY: spawnedObjectPosition.y }],
                         opacity: opacity
@@ -43,7 +42,7 @@ export const PrimaryCatAnimations = ({ primaryCat, setPrimaryCats, dxValue, setM
                     key={`${primaryCat.id}-${Date.now()}`}
                 >
                     <Image
-                        source={require('../assets/redYarn.jpg')}
+                        source={require('../assets/Yarn/Red_Yarn.png')}
                         style={{ width: 25, height: 25 }}
                     />
                 </Animated.View>

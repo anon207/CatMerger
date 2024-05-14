@@ -77,7 +77,7 @@ export const PrimaryCatPanResponder = ({ primaryCat, setPrimaryCats }) => {
                 {...panResponder.panHandlers}
             >
                 <Image
-                    source={require('../assets/Test_cat1.jpg')}
+                    source={require('../assets/Cats/Kitten.png')}
                     style={{ width: 50, height: 50 }}
                 />
             </Animated.View>

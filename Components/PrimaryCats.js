@@ -63,7 +63,7 @@ export const PrimaryCats = ({ primaryCats, setPrimaryCats, setMoney }) => {
                         {...panRespondersRef.current[index]?.panHandlers}
                     >
                         <Image
-                            source={dxValues[index] > 0 ? require('../assets/Kitten.png') : require('../assets/Kitten_Reflection.png')}
+                            source={dxValues[index] > 0 ? require('../assets/Cats/Kitten.png') : require('../assets/Cats/Kitten_Reflection.png')}
                             style={{ width: 60, height: 60 }}
                         />
                     </Animated.View>
