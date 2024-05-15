@@ -1,49 +1,43 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { StyleSheet, View, Pressable, Image, Animated } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { StyleSheet, View, Dimensions } from 'react-native';
 import { PrimaryCats } from './PrimaryCats';
+import { CrateAnimations } from './CrateAnimations';
 
 export const CatContainer = ({ timer, crates, setCrates, MaxCrates, setMoney, primaryCats, setPrimaryCats }) => {
+    const { width, height } = Dimensions.get('window');
     const addedCrateRef = useRef(false);
 
-    const addCrate = () => {
-        if (!addedCrateRef.current && crates.length + primaryCats.length < MaxCrates) {
-            const newCrate = {
-                id: Math.random().toString(),
-                x: Math.floor(Math.random() * 200),
-                y: Math.floor(Math.random() * 200),
-            };
-            setCrates(prevCrates => [...prevCrates, newCrate]);
-            addedCrateRef.current = true;
-        }
-    };
-
-    const removeCrateAndAddCat = (crate) => {
-    setPrimaryCats(prevCats => [...prevCats, /*crate*/{id: crate.id, animatedValue: new Animated.ValueXY({ x: crate.x, y: crate.y })}]);
-        setCrates(prevCrates => prevCrates.filter(oldCrate => oldCrate.id !== crate.id));
-    };
-
     useEffect(() => {
+        const addCrate = () => {
+            if (!addedCrateRef.current && crates.length + primaryCats.length < MaxCrates) {
+                const newCrate = {
+                    id: Math.random().toString(),
+                    x: Math.floor(Math.random() * (width * 0.80 - 50)),
+                    y: Math.floor(Math.random() * (height * 0.55 - 50))
+                };
+                setCrates(prevCrates => [...prevCrates, newCrate]);
+                addedCrateRef.current = true;
+            }
+        };
+
         if (timer === 0) {
             addCrate();
         } else {
             addedCrateRef.current = false;
         }
-    }, [timer]);
+    }, [timer, crates.length, primaryCats.length, MaxCrates, setCrates, width, height]);
 
     return (
         <View style={CatContainerStyles.container}>
-            {crates.map(crate => (
-                <Pressable key={crate.id} onPress={() => removeCrateAndAddCat(crate)}>
-                    <Image
-                        source={require('../assets/Crates/GreenWhiteCrate.png')}
-                        style={{ width: 50, height: 50, position: 'absolute', top: crate.y, left: crate.x }}
-                    />
-                </Pressable>
+            {crates.length > 0 && crates.map(crate => (
+                <CrateAnimations key={crate.id} crate={crate} setCrates={setCrates} setPrimaryCats={setPrimaryCats} />
             ))}
-            <PrimaryCats primaryCats={primaryCats} setPrimaryCats={setPrimaryCats} setMoney={setMoney}/>
+            <PrimaryCats primaryCats={primaryCats} setPrimaryCats={setPrimaryCats} setMoney={setMoney} />
         </View>
     );
 };
+
+export const CatContainerMemoized = React.memo(CatContainer);
 
 const CatContainerStyles = StyleSheet.create({
     container: {

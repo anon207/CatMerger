@@ -6,12 +6,12 @@ import { UpgradeBar } from './UpgradeBar';
 import { CatContainer } from './CatContainer';
 
 export function HomeScreen() {
-  const initialTimePerCrate = 3;
+  const initialTimePerCrate = 1;
   const [primaryCats, setPrimaryCats] = useState([]);
   const [timer, setTimer] = useState(initialTimePerCrate);
   const [crates, setCrates] = useState([]);
   const [money, setMoney] = useState(0);
-  const MaxCrates = 3;
+  const MaxCrates = 10;
 
   useEffect(() => {
     const interval = setInterval(() => {

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Image, Animated, Text, View, StyleSheet } from 'react-native';
 
 export const PrimaryCatAnimations = ({ primaryCat, setPrimaryCats, dxValue, setMoney }) => {
@@ -11,23 +11,21 @@ export const PrimaryCatAnimations = ({ primaryCat, setPrimaryCats, dxValue, setM
                 Animated.timing(spawnedObjectPosition, {
                     toValue: dxValue > 0 ? { x: 75, y: 15 } : { x: -75, y: 15 },
                     duration: 700,
-                    useNativeDriver: false
+                    useNativeDriver: true
                 }),
+                Animated.delay(200),
                 Animated.timing(opacity, {
                     toValue: 0,
                     duration: 300,
-                    useNativeDriver: false
+                    useNativeDriver: true
                 })
             ]).start(() => {
                 setTimeout(() => {
-                    setPrimaryCats(prevCats => {
-                        const updatedCats = prevCats.map(cat =>
-                            cat.id === primaryCat.id ? { ...cat, spawnedObject: null } : cat
-                        );
-                        return updatedCats;
-                    });
-                    startTextAnimation(primaryCat);
-                }, 400);
+                    setPrimaryCats(prevCats => prevCats.map(cat =>
+                        cat.id === primaryCat.id ? { ...cat, spawnedObject: null } : cat
+                    ));
+                    startTextAnimation();
+                }, 100);
             });
 
             const basicYarn = (
@@ -48,18 +46,15 @@ export const PrimaryCatAnimations = ({ primaryCat, setPrimaryCats, dxValue, setM
                 </Animated.View>
             );
 
-            setPrimaryCats(prevCats => {
-                const updatedCats = prevCats.map(cat =>
-                    cat.id === primaryCat.id ? { ...cat, spawnedObject: basicYarn } : cat
-                );
-                return updatedCats;
-            });
+            setPrimaryCats(prevCats => prevCats.map(cat =>
+                cat.id === primaryCat.id ? { ...cat, spawnedObject: basicYarn } : cat
+            ));
         }, 2000);
 
         return () => clearInterval(spawnInterval);
-    }, [primaryCat, setPrimaryCats]);
+    }, [primaryCat, setPrimaryCats, dxValue]);
 
-    const startTextAnimation = (primaryCat) => {
+    const startTextAnimation = () => {
         const textPosition = new Animated.ValueXY({ x: 0, y: 0 });
         const textOpacity = new Animated.Value(0);
         const textScale = new Animated.Value(0);
@@ -79,32 +74,26 @@ export const PrimaryCatAnimations = ({ primaryCat, setPrimaryCats, dxValue, setM
                 toValue: { x: 0, y: -25 },
                 duration: 800,
                 useNativeDriver: false
-            }, setMoney(n=>n+1)),
+            }, setMoney(n => n + 1)),
             Animated.delay(100),
             Animated.timing(textOpacity, {
                 toValue: 0,
                 duration: 200,
-                useNativeDriver: false
+                useNativeDriver: true
             })
         ]).start(() => {
-            setPrimaryCats(prevCats => {
-                const updatedCats = prevCats.map(cat =>
-                    cat.id === primaryCat.id ? { ...cat, spawnedObject: null } : cat
-                );
-                return updatedCats;
-            });
+            setPrimaryCats(prevCats => prevCats.map(cat =>
+                cat.id === primaryCat.id ? { ...cat, spawnedObject: null } : cat
+            ));
         });
 
         const plusOne = (
             <Animated.View
                 style={{
                     position: 'absolute',
-                    top: primaryCat.animatedValue.y._value,
+                    top: primaryCat.animatedValue.y._value + 5,
                     left: dxValue > 0 ? primaryCat.animatedValue.x._value + 75 : primaryCat.animatedValue.x._value - 50,
-                    transform: [ 
-                        { translateX: textPosition.x }, 
-                        { translateY: textPosition.y },
-                        { scale: textScale }],
+                    transform: [{ translateX: textPosition.x }, { translateY: textPosition.y }, { scale: textScale }],
                     opacity: textOpacity,
                 }}
             >
@@ -120,12 +109,9 @@ export const PrimaryCatAnimations = ({ primaryCat, setPrimaryCats, dxValue, setM
             </Animated.View>
         );
 
-        setPrimaryCats(prevCats => {
-            const updatedCats = prevCats.map(cat =>
-                cat.id === primaryCat.id ? { ...cat, spawnedObject: plusOne } : cat
-            );
-            return updatedCats;
-        });
+        setPrimaryCats(prevCats => prevCats.map(cat =>
+            cat.id === primaryCat.id ? { ...cat, spawnedObject: plusOne } : cat
+        ));
     };
 
     return (
@@ -135,13 +121,15 @@ export const PrimaryCatAnimations = ({ primaryCat, setPrimaryCats, dxValue, setM
     );
 };
 
+export const PrimaryCatAnimationsMemoized = React.memo(PrimaryCatAnimations);
+
 const AnimationStyles = StyleSheet.create({
     coinStyle: {
         width: 50,
         height: 30,
         flexDirection: 'row',
         justifyContent: 'space-between'
-    },  
+    },
     coinText: {
         position: 'absolute',
         right: 5,
