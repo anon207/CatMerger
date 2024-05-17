@@ -1,11 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Image, PanResponder, Animated, Dimensions, View, Text } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Image, PanResponder, Animated, Dimensions, View, } from 'react-native';
 import { PrimaryCatAnimations } from './PrimaryCatAnimations';
+import { CrateSmoke } from './CrateSmoke';
 
-export const PrimaryCats = React.memo(({ primaryCats, setPrimaryCats, setMoney, showSmoke, showSmoke2, showSmoke3, showSmoke4, showSmoke5 }) => {
-    const { width, height } = Dimensions.get('window');
+export const PrimaryCats = React.memo(({ primaryCats, setPrimaryCats, setMoney, crates}) => {
+    const [previousCratesLength, setPreviousCratesLength] = useState(crates.length);
     const [dxValues, setDxValues] = useState(primaryCats.map(() => 1));
     const [panResponders, setPanResponders] = useState([]);
+    const { width, height } = Dimensions.get('window');
+
+    useEffect(() => {
+        setPreviousCratesLength(crates.length);
+    }, [crates]);
 
     useEffect(() => {
         const responders = primaryCats.map((primaryCat, index) =>
@@ -31,12 +37,8 @@ export const PrimaryCats = React.memo(({ primaryCats, setPrimaryCats, setMoney, 
                 },
             })
         );
-
         setPanResponders(responders);
-
-        return () => {
-            // Cleanup if needed
-        };
+        return () => {};
     }, [dxValues, primaryCats, setPrimaryCats, width, height]);
 
     const animateCatToRandomPosition = (cat, randomX, randomY) => {
@@ -74,96 +76,7 @@ export const PrimaryCats = React.memo(({ primaryCats, setPrimaryCats, setMoney, 
                         />
                     </Animated.View>
                     <PrimaryCatAnimations primaryCat={primaryCat} setPrimaryCats={setPrimaryCats} dxValue={dxValues[index]} setMoney={setMoney}/>
-                    {showSmoke && (
-                        <Animated.View
-                        style={{
-                            position: 'absolute',
-                            top: primaryCat.animatedValue.y._value+14, // Adjust the position of the smoke cloud as needed
-                            left: primaryCat.animatedValue.x._value+14, // Adjust the position of the smoke cloud as needed
-                            zIndex: 2, // Ensure the smoke cloud appears above the crate
-                        }}
-                        >
-                        <Image
-                            source={require('../assets/Clouds/Cloud1.png')}
-                            style={{
-                                width: 40,
-                                height: 40,
-                            }}
-                        />
-                        </Animated.View>
-                    )}
-                    {showSmoke2 && (
-                        <Animated.View
-                        style={{
-                            position: 'absolute',
-                            top: primaryCat.animatedValue.y._value+5, // Adjust the position of the smoke cloud as needed
-                            left: primaryCat.animatedValue.x._value+10, // Adjust the position of the smoke cloud as needed
-                            zIndex: 2, // Ensure the smoke cloud appears above the crate
-                        }}
-                        >
-                        <Image
-                            source={require('../assets/Clouds/Cloud2.png')}
-                            style={{
-                                width: 50,
-                                height: 50,
-                            }}
-                        />
-                        </Animated.View>
-                    )}
-                    {showSmoke3 && (
-                        <Animated.View
-                        style={{
-                            position: 'absolute',
-                            top: primaryCat.animatedValue.y._value+4, // Adjust the position of the smoke cloud as needed
-                            left: primaryCat.animatedValue.x._value+10, // Adjust the position of the smoke cloud as needed
-                            zIndex: 2, // Ensure the smoke cloud appears above the crate
-                        }}
-                        >
-                        <Image
-                            source={require('../assets/Clouds/Cloud3.png')}
-                            style={{
-                                width: 50,
-                                height: 50,
-                            }}
-                        />
-                        </Animated.View>
-                    )}
-                    {showSmoke4 && (
-                        <Animated.View
-                        style={{
-                            position: 'absolute',
-                            top: primaryCat.animatedValue.y._value-7, // Adjust the position of the smoke cloud as needed
-                            left: primaryCat.animatedValue.x._value, // Adjust the position of the smoke cloud as needed
-                            zIndex: 2, // Ensure the smoke cloud appears above the crate
-                        }}
-                        >
-                        <Image
-                            source={require('../assets/Clouds/Cloud4.png')}
-                            style={{
-                                width: 70,
-                                height: 70,
-                            }}
-                        />
-                        </Animated.View>
-                    )}
-                    {showSmoke5 && (
-                        <Animated.View
-                        style={{
-                            position: 'absolute',
-                            top: primaryCat.animatedValue.y._value-10, // Adjust the position of the smoke cloud as needed
-                            left: primaryCat.animatedValue.x._value-7, // Adjust the position of the smoke cloud as needed
-                            zIndex: 2, // Ensure the smoke cloud appears above the crate
-                        }}
-                        >
-                        <Image
-                            source={require('../assets/Clouds/Cloud5.png')}
-                            style={{
-                                width: 85,
-                                height: 85,
-                            }}
-                        />
-                        </Animated.View>
-                    )}
+                    <CrateSmoke primaryCats={primaryCats} primaryCat={primaryCat} index={index} triggerSmokeAnimation={crates.length < previousCratesLength}/>
                 </View>
             ))}
         </>

@@ -1,36 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Image, Animated, View, Pressable } from 'react-native';
 
-export const CrateAnimations = ({ crate, setCrates, setPrimaryCats, setShowSmoke, setShowSmoke2, setShowSmoke3, setShowSmoke4, setShowSmoke5}) => {
+export const CrateAnimations = ({ crate, setCrates, setPrimaryCats }) => {
     const OG = useRef(new Animated.ValueXY({ x: crate.x, y: crate.y })).current;
     const position = useRef(new Animated.ValueXY({ x: crate.x, y: -300 })).current;
     const Xscale = useRef(new Animated.Value(1)).current;
     const Yscale = useRef(new Animated.Value(1)).current;
 
     const removeCrateAndAddCat = (crate) => {
-        setShowSmoke(true);
-        // setShowSmoke2(true);
-        // setShowSmoke3(true);
-        // setShowSmoke4(true);
-        // setShowSmoke5(true);
-        setTimeout(() => {
-            setShowSmoke(false);
-            setShowSmoke2(true);
-            setShowSmoke3(true);
-            setTimeout(() => {
-                setShowSmoke2(false);
-                setShowSmoke3(false);
-                setShowSmoke4(true);
-                setTimeout(() => {
-                    setShowSmoke4(false);
-                    setShowSmoke5(true);
-                    setTimeout(() => {
-                        setShowSmoke5(false);
-                    }, 160)
-                }, 90)
-            }, 70)
-        }, 40);
-
         setPrimaryCats(prevCats => [...prevCats, { id: crate.id, animatedValue: new Animated.ValueXY({ x: crate.x, y: crate.y }) }]);
         setCrates(prevCrates => prevCrates.filter(oldCrate => oldCrate.id !== crate.id));
     };
