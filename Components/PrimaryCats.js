@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Image, PanResponder, Animated, Dimensions, View, } from 'react-native';
+import { Image, PanResponder, Animated, Dimensions, View, Text} from 'react-native';
 import { PrimaryCatAnimations } from './PrimaryCatAnimations';
 import { CrateSmoke } from './CrateSmoke';
 

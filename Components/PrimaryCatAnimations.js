@@ -2,10 +2,10 @@ import React, { useEffect, useRef } from 'react';
 import { Image, Animated, Text, View, StyleSheet } from 'react-native';
 
 export const PrimaryCatAnimations = ({ primaryCat, setPrimaryCats, dxValue, setMoney }) => {
+    const spawnedObjectPosition = new Animated.ValueXY({ x: 0, y: 0 });
+    const opacity = new Animated.Value(1);
     useEffect(() => {
         const spawnInterval = setInterval(() => {
-            const spawnedObjectPosition = new Animated.ValueXY({ x: 0, y: 0 });
-            const opacity = new Animated.Value(1);
 
             Animated.sequence([
                 Animated.timing(spawnedObjectPosition, {
@@ -73,7 +73,7 @@ export const PrimaryCatAnimations = ({ primaryCat, setPrimaryCats, dxValue, setM
             Animated.timing(textPosition, {
                 toValue: { x: 0, y: -25 },
                 duration: 800,
-                useNativeDriver: false
+                useNativeDriver: true
             }, setMoney(n => n + 1)),
             Animated.delay(100),
             Animated.timing(textOpacity, {

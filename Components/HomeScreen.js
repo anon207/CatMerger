@@ -10,7 +10,7 @@ export function HomeScreen() {
   const [primaryCats, setPrimaryCats] = useState([]);
   const [timer, setTimer] = useState(initialTimePerCrate);
   const [crates, setCrates] = useState([]);
-  const [money, setMoney] = useState(0);
+  const [money, setMoney] = useState(3000);
   const MaxCrates = 10;
 
   useEffect(() => {
